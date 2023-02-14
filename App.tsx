@@ -9,7 +9,8 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-import { useMMKVNumber } from 'react-native-mmkv';
+import { useMMKVNumber, useMMKVObject } from 'react-native-mmkv';
+import { getStatsKey } from './src/store/utils/getStatsKey';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -20,6 +21,10 @@ function App() {
 
   const [totalBottlesDrunk, setTotalBottlesDrunk] =
     useMMKVNumber('totalBottlesDrunk');
+
+  const [todayStats, setTodayStats] = useMMKVObject<{ bottles: number }>(
+    getStatsKey(new Date())
+  );
 
   return (
     <SafeAreaView style={[styles.safeArea, backgroundStyle]}>
@@ -36,12 +41,20 @@ function App() {
           <Text style={styles.bottlesCount}>
             Total bottles: {totalBottlesDrunk}
           </Text>
+          <Text style={styles.bottlesCount}>
+            Bottles today: {todayStats?.bottles}
+          </Text>
         </View>
         <View style={styles.addButtonView}>
           <Button
             title="Add bottle"
             onPress={() => {
               setTotalBottlesDrunk((current) => (current || 0) + 1);
+              setTodayStats(
+                todayStats
+                  ? { ...todayStats, bottles: todayStats.bottles + 1 }
+                  : { bottles: 1 }
+              );
             }}
           />
         </View>

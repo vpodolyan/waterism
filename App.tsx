@@ -42,7 +42,7 @@ function App() {
             Total bottles: {totalBottlesDrunk}
           </Text>
           <Text style={styles.bottlesCount}>
-            Bottles today: {todayStats?.bottles}
+            Bottles today: {todayStats?.bottles || 0}
           </Text>
         </View>
         <View style={styles.addButtonView}>

@@ -1,4 +1,4 @@
-import { STATS } from '../consts';
+import { STATS } from '../keys';
 
 export function getStatsKey(date: Date) {
   const year = date.getFullYear();

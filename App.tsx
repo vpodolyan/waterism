@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Button,
   SafeAreaView,
@@ -10,6 +10,7 @@ import {
   View,
 } from 'react-native';
 import { useMMKVNumber, useMMKVObject } from 'react-native-mmkv';
+import { BOTTLE_VOLUME, SETTINGS, TOTAL_BOTTLES } from './src/store/keys';
 import { getStatsKey } from './src/store/utils/getStatsKey';
 
 function App() {
@@ -20,11 +21,21 @@ function App() {
   };
 
   const [totalBottlesDrunk, setTotalBottlesDrunk] =
-    useMMKVNumber('totalBottlesDrunk');
+    useMMKVNumber(TOTAL_BOTTLES);
 
   const [todayStats, setTodayStats] = useMMKVObject<{ bottles: number }>(
     getStatsKey(new Date())
   );
+
+  const [bottleVolume, setBottleVolume] = useMMKVNumber(
+    `${SETTINGS}.${BOTTLE_VOLUME}`
+  );
+
+  useEffect(() => {
+    if (!bottleVolume) {
+      setBottleVolume(500); // initialize as 500 milliliters
+    }
+  }, [bottleVolume, setBottleVolume]);
 
   return (
     <SafeAreaView style={[styles.safeArea, backgroundStyle]}>
@@ -43,6 +54,10 @@ function App() {
           </Text>
           <Text style={styles.bottlesCount}>
             Bottles today: {todayStats?.bottles || 0}
+          </Text>
+          <Text style={styles.bottlesCount}>
+            Litres today:{' '}
+            {(todayStats?.bottles || 0) * ((bottleVolume || 0) / 1000)}
           </Text>
         </View>
         <View style={styles.addButtonView}>

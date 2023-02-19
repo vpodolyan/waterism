@@ -1,4 +1,4 @@
-import { STATS } from '../consts';
+import { STATS } from '../keys';
 import { getStatsKey } from './getStatsKey';
 
 it('should return correct key for the date', () => {

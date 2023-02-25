@@ -1,0 +1,19 @@
+name: AppCenter Android Build
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: API HTTP Request
+      run: |
+        curl -X 'POST' '${{ secrets.ANDROID_BUILD_URL }}' \
+          -H 'accept: application/json' \
+          -H 'X-API-Token: ${{ secrets.APPCENTER_API_TOKEN }}' \
+          -H 'Content-Type: application/json' \
+          -d '{ "sourceVersion": "${{ github.sha }}", "debug": false }'

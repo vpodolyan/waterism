@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
+  AppState,
   Button,
   SafeAreaView,
   ScrollView,
@@ -20,11 +21,13 @@ function App() {
     backgroundColor: isDarkMode ? '#000' : '#fff',
   };
 
+  const [todayStatsKey, setTodayStatsKey] = useState(getStatsKey(new Date()));
+
   const [totalBottlesDrunk, setTotalBottlesDrunk] =
     useMMKVNumber(TOTAL_BOTTLES);
 
   const [todayStats, setTodayStats] = useMMKVObject<{ bottles: number }>(
-    getStatsKey(new Date())
+    todayStatsKey
   );
 
   const [bottleVolume, setBottleVolume] = useMMKVNumber(
@@ -36,6 +39,14 @@ function App() {
       setBottleVolume(500); // initialize as 500 milliliters
     }
   }, [bottleVolume, setBottleVolume]);
+
+  useEffect(() => {
+    AppState.addEventListener('change', (state) => {
+      if (state === 'active') {
+        setTodayStatsKey(getStatsKey(new Date()));
+      }
+    });
+  });
 
   return (
     <SafeAreaView style={[styles.safeArea, backgroundStyle]}>

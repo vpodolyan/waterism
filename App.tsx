@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { useMMKVNumber, useMMKVObject } from 'react-native-mmkv';
 import { BOTTLE_VOLUME, SETTINGS, TOTAL_BOTTLES } from './src/store/keys';
-import { getStatsKey } from './src/store/utils/getStatsKey';
+import { getStorageStatsKey } from './src/store/utils/getStorageStatsKey';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -21,7 +21,9 @@ function App() {
     backgroundColor: isDarkMode ? '#000' : '#fff',
   };
 
-  const [todayStatsKey, setTodayStatsKey] = useState(getStatsKey(new Date()));
+  const [todayStatsKey, setTodayStatsKey] = useState(
+    getStorageStatsKey(new Date())
+  );
 
   const [totalBottlesDrunk, setTotalBottlesDrunk] =
     useMMKVNumber(TOTAL_BOTTLES);
@@ -43,7 +45,7 @@ function App() {
   useEffect(() => {
     AppState.addEventListener('change', (state) => {
       if (state === 'active') {
-        setTodayStatsKey(getStatsKey(new Date()));
+        setTodayStatsKey(getStorageStatsKey(new Date()));
       }
     });
   });

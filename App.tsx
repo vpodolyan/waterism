@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   AppState,
   Button,
@@ -10,9 +10,9 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-import { useMMKVNumber, useMMKVObject } from 'react-native-mmkv';
+import { useMMKVNumber } from 'react-native-mmkv';
 import { BOTTLE_VOLUME, SETTINGS, TOTAL_BOTTLES } from './src/store/keys';
-import { getStorageStatsKey } from './src/store/utils/getStorageStatsKey';
+import { useGetStatsByDate } from './src/store/utils/useGetStatsByDate';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -21,20 +21,14 @@ function App() {
     backgroundColor: isDarkMode ? '#000' : '#fff',
   };
 
-  const [todayStatsKey, setTodayStatsKey] = useState(
-    getStorageStatsKey(new Date())
-  );
-
   const [totalBottlesDrunk, setTotalBottlesDrunk] =
     useMMKVNumber(TOTAL_BOTTLES);
-
-  const [todayStats, setTodayStats] = useMMKVObject<{ bottles: number }>(
-    todayStatsKey
-  );
 
   const [bottleVolume, setBottleVolume] = useMMKVNumber(
     `${SETTINGS}.${BOTTLE_VOLUME}`
   );
+
+  const [todayStats, setStats] = useGetStatsByDate(new Date());
 
   useEffect(() => {
     if (!bottleVolume) {
@@ -45,7 +39,7 @@ function App() {
   useEffect(() => {
     AppState.addEventListener('change', (state) => {
       if (state === 'active') {
-        setTodayStatsKey(getStorageStatsKey(new Date()));
+        // setYearStatsKey(getStorageStatsKey(new Date()));
       }
     });
   });
@@ -78,11 +72,9 @@ function App() {
             title="Add bottle"
             onPress={() => {
               setTotalBottlesDrunk((current) => (current || 0) + 1);
-              setTodayStats(
-                todayStats
-                  ? { ...todayStats, bottles: todayStats.bottles + 1 }
-                  : { bottles: 1 }
-              );
+              setStats({
+                bottles: todayStats?.bottles ? todayStats.bottles + 1 : 1,
+              });
             }}
           />
         </View>

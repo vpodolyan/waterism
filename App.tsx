@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   AppState,
   Button,
@@ -28,7 +28,8 @@ function App() {
     `${SETTINGS}.${BOTTLE_VOLUME}`
   );
 
-  const [todayStats, setStats] = useGetStatsByDate(new Date());
+  const [date, setDate] = useState(new Date());
+  const [todayStats, setStats] = useGetStatsByDate(date);
 
   useEffect(() => {
     if (!bottleVolume) {
@@ -39,7 +40,7 @@ function App() {
   useEffect(() => {
     AppState.addEventListener('change', (state) => {
       if (state === 'active') {
-        // setYearStatsKey(getStorageStatsKey(new Date()));
+        setDate(new Date());
       }
     });
   });

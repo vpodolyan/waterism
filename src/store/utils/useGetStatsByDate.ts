@@ -17,8 +17,25 @@ export function useGetStatsByDate(
 
   const updateStats = useCallback(
     (value: DayStats) => {
-      const nextState = { ...yearStats };
-      nextState[date.getMonth()][date.getDate()] = { ...dayStats, ...value };
+      let nextState: YearStats;
+
+      if (!yearStats) {
+        nextState = {
+          [date.getMonth()]: {
+            [date.getDate()]: { bottles: 0 },
+          },
+        };
+      } else {
+        nextState = { ...yearStats };
+      }
+
+      if (!nextState[date.getMonth()]) {
+        nextState[date.getMonth()] = {
+          [date.getDate()]: { ...value },
+        };
+      } else {
+        nextState[date.getMonth()][date.getDate()] = { ...dayStats, ...value };
+      }
 
       setYearStats(nextState);
     },
@@ -29,10 +46,5 @@ export function useGetStatsByDate(
 }
 
 function getDayStats(yearStats: YearStats | undefined, date: Date) {
-  if (!yearStats) {
-    const emptyStats: DayStats = { bottles: 0 };
-    return emptyStats;
-  }
-
-  return yearStats?.[date.getMonth()][date.getDate()];
+  return yearStats?.[date.getMonth()]?.[date.getDate()];
 }

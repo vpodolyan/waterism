@@ -10,9 +10,9 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-import { useMMKVNumber, useMMKVObject } from 'react-native-mmkv';
+import { useMMKVNumber } from 'react-native-mmkv';
 import { BOTTLE_VOLUME, SETTINGS, TOTAL_BOTTLES } from './src/store/keys';
-import { getStatsKey } from './src/store/utils/getStatsKey';
+import { useGetStatsByDate } from './src/store/utils/useGetStatsByDate';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -21,18 +21,15 @@ function App() {
     backgroundColor: isDarkMode ? '#000' : '#fff',
   };
 
-  const [todayStatsKey, setTodayStatsKey] = useState(getStatsKey(new Date()));
-
   const [totalBottlesDrunk, setTotalBottlesDrunk] =
     useMMKVNumber(TOTAL_BOTTLES);
-
-  const [todayStats, setTodayStats] = useMMKVObject<{ bottles: number }>(
-    todayStatsKey
-  );
 
   const [bottleVolume, setBottleVolume] = useMMKVNumber(
     `${SETTINGS}.${BOTTLE_VOLUME}`
   );
+
+  const [date, setDate] = useState(new Date());
+  const [todayStats, setStats] = useGetStatsByDate(date);
 
   useEffect(() => {
     if (!bottleVolume) {
@@ -43,7 +40,7 @@ function App() {
   useEffect(() => {
     AppState.addEventListener('change', (state) => {
       if (state === 'active') {
-        setTodayStatsKey(getStatsKey(new Date()));
+        setDate(new Date());
       }
     });
   });
@@ -76,11 +73,9 @@ function App() {
             title="Add bottle"
             onPress={() => {
               setTotalBottlesDrunk((current) => (current || 0) + 1);
-              setTodayStats(
-                todayStats
-                  ? { ...todayStats, bottles: todayStats.bottles + 1 }
-                  : { bottles: 1 }
-              );
+              setStats({
+                bottles: todayStats?.bottles ? todayStats.bottles + 1 : 1,
+              });
             }}
           />
         </View>

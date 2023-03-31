@@ -1798,6 +1798,13 @@
   dependencies:
     defer-to-connect "^2.0.1"
 
+"@testing-library/react-native@^11.5.3":
+  version "11.5.3"
+  resolved "https://registry.yarnpkg.com/@testing-library/react-native/-/react-native-11.5.3.tgz#661fb28da14e2133b820ca6cc8314385f1099438"
+  integrity sha512-upsNevSl0M8mzJkpU1M4O/3ABsyUw8OLeSqblMjsYPWSVh4ocVZy9s53UssPmgrvP5IRAVvVo0WllVwA3tcfgw==
+  dependencies:
+    pretty-format "^29.0.0"
+
 "@tootallnate/once@1":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"

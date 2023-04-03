@@ -1,3 +1,8 @@
+import {
+  DarkTheme,
+  DefaultTheme,
+  NavigationContainer,
+} from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import {
   AppState,
@@ -7,8 +12,8 @@ import {
   StatusBar,
   StyleSheet,
   Text,
-  useColorScheme,
   View,
+  useColorScheme,
 } from 'react-native';
 import { useMMKVNumber } from 'react-native-mmkv';
 import { BOTTLE_VOLUME, SETTINGS, TOTAL_BOTTLES } from './src/store/keys';
@@ -46,41 +51,43 @@ function App() {
   });
 
   return (
-    <SafeAreaView style={[styles.safeArea, backgroundStyle]}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}
-        contentContainerStyle={styles.contentContainer}
-      >
-        <View style={styles.titleView}>
-          <Text style={styles.bottlesCount}>
-            Total bottles: {totalBottlesDrunk}
-          </Text>
-          <Text style={styles.bottlesCount}>
-            Bottles today: {todayStats?.bottles || 0}
-          </Text>
-          <Text style={styles.bottlesCount}>
-            Litres today:{' '}
-            {(todayStats?.bottles || 0) * ((bottleVolume || 0) / 1000)}
-          </Text>
-        </View>
-        <View style={styles.addButtonView}>
-          <Button
-            title="Add bottle"
-            onPress={() => {
-              setTotalBottlesDrunk((current) => (current || 0) + 1);
-              setStats({
-                bottles: todayStats?.bottles ? todayStats.bottles + 1 : 1,
-              });
-            }}
-          />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <NavigationContainer theme={isDarkMode ? DarkTheme : DefaultTheme}>
+      <SafeAreaView style={[styles.safeArea, backgroundStyle]}>
+        <StatusBar
+          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+          backgroundColor={backgroundStyle.backgroundColor}
+        />
+        <ScrollView
+          contentInsetAdjustmentBehavior="automatic"
+          style={backgroundStyle}
+          contentContainerStyle={styles.contentContainer}
+        >
+          <View style={styles.titleView}>
+            <Text style={styles.bottlesCount}>
+              Total bottles: {totalBottlesDrunk}
+            </Text>
+            <Text style={styles.bottlesCount}>
+              Bottles today: {todayStats?.bottles || 0}
+            </Text>
+            <Text style={styles.bottlesCount}>
+              Litres today:{' '}
+              {(todayStats?.bottles || 0) * ((bottleVolume || 0) / 1000)}
+            </Text>
+          </View>
+          <View style={styles.addButtonView}>
+            <Button
+              title="Add bottle"
+              onPress={() => {
+                setTotalBottlesDrunk((current) => (current || 0) + 1);
+                setStats({
+                  bottles: todayStats?.bottles ? todayStats.bottles + 1 : 1,
+                });
+              }}
+            />
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    </NavigationContainer>
   );
 }
 

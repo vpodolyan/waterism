@@ -13,6 +13,7 @@
     "release": "release-it"
   },
   "dependencies": {
+    "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/native": "^6.1.6",
     "react": "18.2.0",
     "react-native": "0.71.1",

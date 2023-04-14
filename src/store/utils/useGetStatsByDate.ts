@@ -1,17 +1,14 @@
 import { useCallback } from 'react';
-import { MMKV, useMMKVObject } from 'react-native-mmkv';
+import { MMKV } from 'react-native-mmkv';
 import { DayStats } from '../../types/DayStats';
 import { YearStats } from '../../types/YearStats';
-import { getStorageStatsKey } from './getStorageStatsKey';
+import { useYearStats } from './useYearStats';
 
 export function useGetStatsByDate(
   date: Date,
   storageInstance?: MMKV
 ): [DayStats | undefined, (value: DayStats) => void] {
-  const [yearStats, setYearStats] = useMMKVObject<YearStats>(
-    getStorageStatsKey(date),
-    storageInstance
-  );
+  const [yearStats, setYearStats] = useYearStats(date, storageInstance);
 
   const dayStats = getDayStats(yearStats, date);
 

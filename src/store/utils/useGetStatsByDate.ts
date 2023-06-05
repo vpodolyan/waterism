@@ -19,8 +19,8 @@ export function useGetStatsByDate(
       if (!yearStats) {
         nextState = {
           [date.getMonth()]: {
-            [date.getDate()]: { bottles: 0 },
-          },
+            [date.getDate()]: { bottles: 0 }
+          }
         };
       } else {
         nextState = { ...yearStats };
@@ -28,7 +28,7 @@ export function useGetStatsByDate(
 
       if (!nextState[date.getMonth()]) {
         nextState[date.getMonth()] = {
-          [date.getDate()]: { ...value },
+          [date.getDate()]: { ...value }
         };
       } else {
         nextState[date.getMonth()][date.getDate()] = { ...dayStats, ...value };

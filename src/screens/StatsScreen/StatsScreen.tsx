@@ -9,7 +9,7 @@ export function StatsScreen() {
   const chartData = yearStats?.[3]
     ? Object.keys(yearStats[3]).map((day) => ({
         date: day,
-        bottles: yearStats[3][+day].bottles,
+        bottles: yearStats[3][+day].bottles
       }))
     : [];
 
@@ -36,6 +36,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f5fcff',
-  },
+    backgroundColor: '#f5fcff'
+  }
 });

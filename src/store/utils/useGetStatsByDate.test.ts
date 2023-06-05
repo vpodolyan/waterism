@@ -11,9 +11,9 @@ describe('useGetStatsByDate tests', () => {
   const statsObject = {
     [`${date.getMonth()}`]: {
       [`${date.getDate()}`]: {
-        bottles: 10,
-      },
-    },
+        bottles: 10
+      }
+    }
   };
 
   beforeAll(() => {
@@ -26,9 +26,7 @@ describe('useGetStatsByDate tests', () => {
     const { result } = renderHook(() => useGetStatsByDate(date, storage));
     const [stats] = result.current ?? [{ bottles: 0 }];
 
-    expect(stats?.bottles).toBe(
-      statsObject[date.getMonth()][date.getDate()].bottles
-    );
+    expect(stats?.bottles).toBe(statsObject[date.getMonth()][date.getDate()].bottles);
   });
 
   it('should update stats correctly', () => {

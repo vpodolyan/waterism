@@ -9,7 +9,7 @@ import {
   StyleSheet,
   Text,
   View,
-  useColorScheme,
+  useColorScheme
 } from 'react-native';
 import { BOTTLE_VOLUME, SETTINGS, TOTAL_BOTTLES } from '../../store/keys';
 import { useGetStatsByDate } from '../../store/utils/useGetStatsByDate';
@@ -18,15 +18,12 @@ export function HomeScreen() {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? '#000' : '#fff',
+    backgroundColor: isDarkMode ? '#000' : '#fff'
   };
 
-  const [totalBottlesDrunk, setTotalBottlesDrunk] =
-    useMMKVNumber(TOTAL_BOTTLES);
+  const [totalBottlesDrunk, setTotalBottlesDrunk] = useMMKVNumber(TOTAL_BOTTLES);
 
-  const [bottleVolume, setBottleVolume] = useMMKVNumber(
-    `${SETTINGS}.${BOTTLE_VOLUME}`
-  );
+  const [bottleVolume, setBottleVolume] = useMMKVNumber(`${SETTINGS}.${BOTTLE_VOLUME}`);
 
   const [date, setDate] = useState(new Date());
   const [todayStats, setStats] = useGetStatsByDate(date);
@@ -57,15 +54,10 @@ export function HomeScreen() {
         contentContainerStyle={styles.contentContainer}
       >
         <View style={styles.titleView}>
+          <Text style={styles.bottlesCount}>Total bottles: {totalBottlesDrunk}</Text>
+          <Text style={styles.bottlesCount}>Bottles today: {todayStats?.bottles || 0}</Text>
           <Text style={styles.bottlesCount}>
-            Total bottles: {totalBottlesDrunk}
-          </Text>
-          <Text style={styles.bottlesCount}>
-            Bottles today: {todayStats?.bottles || 0}
-          </Text>
-          <Text style={styles.bottlesCount}>
-            Litres today:{' '}
-            {(todayStats?.bottles || 0) * ((bottleVolume || 0) / 1000)}
+            Litres today: {(todayStats?.bottles || 0) * ((bottleVolume || 0) / 1000)}
           </Text>
         </View>
         <View style={styles.addButtonView}>
@@ -74,7 +66,7 @@ export function HomeScreen() {
             onPress={() => {
               setTotalBottlesDrunk((current) => (current || 0) + 1);
               setStats({
-                bottles: todayStats?.bottles ? todayStats.bottles + 1 : 1,
+                bottles: todayStats?.bottles ? todayStats.bottles + 1 : 1
               });
             }}
           />
@@ -86,21 +78,21 @@ export function HomeScreen() {
 
 const styles = StyleSheet.create({
   safeArea: {
-    flex: 1,
+    flex: 1
   },
   bottlesCount: {
     fontSize: 24,
-    textAlign: 'center',
+    textAlign: 'center'
   },
   contentContainer: {
     flexGrow: 1,
-    padding: 12,
+    padding: 12
   },
   titleView: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   addButtonView: {
-    alignItems: 'flex-end',
-  },
+    alignItems: 'flex-end'
+  }
 });

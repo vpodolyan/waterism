@@ -1,9 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {
-  DarkTheme,
-  DefaultTheme,
-  NavigationContainer,
-} from '@react-navigation/native';
+import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 import { useColorScheme } from 'react-native';
 import { HomeScreen } from './src/screens/HomeScreen';
@@ -16,7 +12,7 @@ function App() {
 
   return (
     <NavigationContainer theme={isDarkMode ? DarkTheme : DefaultTheme}>
-      <Tab.Navigator>
+      <Tab.Navigator screenOptions={{ headerShown: false }}>
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Stats" component={StatsScreen} />
       </Tab.Navigator>

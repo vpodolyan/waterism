@@ -5,18 +5,18 @@ import { useYearStats } from '../../store/utils/useYearStats';
 
 export function StatsScreen() {
   const [yearStats] = useYearStats(new Date());
-  console.log('yearStats[3]', yearStats?.[3]);
-  const chartData = yearStats?.[3]
-    ? Object.keys(yearStats[3]).map((day) => ({
+  const monthIndex = new Date().getMonth();
+  const chartData = yearStats?.[monthIndex]
+    ? Object.keys(yearStats[monthIndex]).map((day) => ({
         date: day,
-        bottles: yearStats[3][+day].bottles
+        bottles: yearStats[monthIndex][+day].bottles
       }))
     : [];
 
   return (
     <View style={styles.container}>
       <VictoryChart width={400} theme={VictoryTheme.material}>
-        {!!yearStats && yearStats[3] && (
+        {!!yearStats && yearStats[monthIndex] && (
           <VictoryBar
             data={chartData}
             x="date"

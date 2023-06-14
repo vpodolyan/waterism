@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   text: {
-    fontSize: 20
+    fontSize: 20,
+    color: '#555'
   }
 });

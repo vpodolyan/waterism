@@ -3,3 +3,7 @@ export const BOTTLE_VOLUME = 'bottleVolume';
 export const SETTINGS = 'settings';
 export const STATS = 'stats';
 export const TOTAL_BOTTLES = 'totalBottlesDrunk';
+export const CURRENT_FILTER_BOTTLES = 'currentFilterBottles'; // Bottles drunk with current filter installed.
+export const CURRENT_FILTER_LIMIT = 'currentFilterLLimit'; // Current filter limit of bottles which should be replaced when exceeded.
+export const TOTAL_FILTERS_USED = 'totalFiltersUsed';
+export const DATA_SCHEMA_VERSION = 'dataSchemaVersion';

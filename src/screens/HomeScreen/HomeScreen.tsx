@@ -74,7 +74,7 @@ export function HomeScreen() {
             Bottles with current filter: ({currentFilterBottles}/
             <Text
               style={
-                get(currentFilterBottles) < get(currentFilterLimit) ? styles.limitExceededText : undefined
+                get(currentFilterBottles) >= get(currentFilterLimit) ? styles.limitExceededText : undefined
               }
             >
               {currentFilterLimit}

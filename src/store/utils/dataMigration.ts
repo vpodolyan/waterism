@@ -12,7 +12,7 @@ function toVersion1(storage: MMKV) {
     storage.set(CURRENT_FILTER_BOTTLES, storage.getNumber(TOTAL_BOTTLES) || 0);
     storage.set(CURRENT_FILTER_LIMIT, 300);
     storage.set(TOTAL_FILTERS_USED, 0);
-    storage.set(DATA_SCHEMA_VERSION, '1');
+    storage.set(DATA_SCHEMA_VERSION, 1);
   } catch (e) {
     console.error(`Data migration error: ${e}`);
   }
@@ -20,7 +20,7 @@ function toVersion1(storage: MMKV) {
 
 export function updateDataSchema(storageInstance?: MMKV) {
   const storage = storageInstance || new MMKV();
-  const dataSchemaVersion = storage.getString(DATA_SCHEMA_VERSION);
+  const dataSchemaVersion = storage.getNumber(DATA_SCHEMA_VERSION);
   if (!dataSchemaVersion) {
     toVersion1(storage);
   }

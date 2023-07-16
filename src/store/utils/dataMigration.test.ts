@@ -14,6 +14,6 @@ describe('Data migration tests', () => {
     updateDataSchema(storage);
 
     expect(storage.getNumber(CURRENT_FILTER_BOTTLES)).toBe(targetBottlesValue);
-    expect(storage.getString(DATA_SCHEMA_VERSION)).toBe('1');
+    expect(storage.getNumber(DATA_SCHEMA_VERSION)).toBe(1);
   });
 });

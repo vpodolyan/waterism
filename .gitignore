@@ -58,3 +58,6 @@ buck-out/
 android/app/libs
 android/keystores/debug.keystore
 android/app/release.keystore
+
+# testing
+/coverage

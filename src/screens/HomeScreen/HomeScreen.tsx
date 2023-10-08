@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
   AppState,
-  Button,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -11,6 +10,7 @@ import {
   useColorScheme
 } from 'react-native';
 import { useMMKVNumber } from 'react-native-mmkv';
+import { Fab } from '../../components/Fab/Fab';
 import {
   BOTTLE_VOLUME,
   CURRENT_FILTER_BOTTLES,
@@ -40,6 +40,19 @@ export function HomeScreen() {
 
   const [date, setDate] = useState(new Date());
   const [todayStats, setStats] = useGetStatsByDate(date);
+
+  const addBottle = () => {
+    setTotalBottlesDrunk((current) => (current || 0) + 1);
+    setCurrentFilterBottles((current) => (current || 0) + 1);
+    setStats({
+      bottles: todayStats?.bottles ? todayStats.bottles + 1 : 1
+    });
+  };
+
+  const replaceFilter = () => {
+    setCurrentFilterBottles(0);
+    setTotalFiltersUsed((value) => (value || 0) + 1);
+  };
 
   useEffect(() => {
     if (!bottleVolume) {
@@ -88,25 +101,7 @@ export function HomeScreen() {
             Litres today: {(todayStats?.bottles || 0) * ((bottleVolume || 0) / 1000)}
           </Text>
         </View>
-        <View style={styles.addButtonView}>
-          <Button
-            title="Replace filter"
-            onPress={() => {
-              setCurrentFilterBottles(0);
-              setTotalFiltersUsed((value) => (value || 0) + 1);
-            }}
-          />
-          <Button
-            title="Add bottle"
-            onPress={() => {
-              setTotalBottlesDrunk((current) => (current || 0) + 1);
-              setCurrentFilterBottles((current) => (current || 0) + 1);
-              setStats({
-                bottles: todayStats?.bottles ? todayStats.bottles + 1 : 1
-              });
-            }}
-          />
-        </View>
+        <Fab onPrimaryButtonClick={addBottle} onSencodaryButtonClick={replaceFilter} />
       </ScrollView>
     </SafeAreaView>
   );

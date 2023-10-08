@@ -11,7 +11,7 @@ interface Props {
 }
 
 export function Fab({ onPrimaryButtonClick, onSencodaryButtonClick }: Props) {
-  const [expanded, setExpanded] = useState(true);
+  const [expanded, setExpanded] = useState(false);
 
   const primaryButtonAnimatedStyle = useAnimatedStyle(() => ({
     width: withTiming(expanded ? 48 : 130, { duration: 100 })
@@ -34,10 +34,14 @@ export function Fab({ onPrimaryButtonClick, onSencodaryButtonClick }: Props) {
   return (
     <>
       {expanded && <FadedBackdrop onPress={() => setExpanded(false)} />}
-      <View style={styles.expandedLabelsContainer}>
-        <Text style={styles.label}>Replace filter</Text>
-        <Text style={styles.label}>Add bottle</Text>
-      </View>
+
+      {expanded && (
+        <View style={styles.expandedLabelsContainer}>
+          <Text style={styles.label}>Replace filter</Text>
+          <Text style={styles.label}>Add bottle</Text>
+        </View>
+      )}
+
       <Pressable onPress={handleSecondaryPress}>
         <Animated.View style={[styles.secondaryButtonContainer, secondaryButtonAnimatedStyle]}>
           <Icon name="refresh" color={colors.white} size={20} />

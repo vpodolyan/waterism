@@ -48,20 +48,17 @@ export function Fab({ onPrimaryButtonClick, onSencodaryButtonClick }: Props) {
         </Animated.View>
       </Pressable>
 
-      <Pressable onPress={handlePrimaryPress}>
-        <Animated.View style={[styles.primaryButtonContainer, primaryButtonAnimatedStyle]}>
+      <Animated.View style={[styles.primaryButtonContainer, primaryButtonAnimatedStyle]}>
+        <Pressable onPress={handlePrimaryPress}>
           {!expanded && <Text style={styles.label}>Add bottle</Text>}
           {expanded && <Icon name="add" size={20} color={colors.white} />}
-          {!expanded && (
-            <Pressable
-              onPress={() => setExpanded(true)}
-              hitSlop={{ top: 10, bottom: 12, right: 10, left: 2 }}
-            >
-              <Icon name="arrow-drop-up" style={styles.upIcon} size={20} color={colors.white} />
-            </Pressable>
-          )}
-        </Animated.View>
-      </Pressable>
+        </Pressable>
+        {!expanded && (
+          <Pressable onPress={() => setExpanded(true)} hitSlop={{ top: 10, bottom: 12, right: 10, left: 2 }}>
+            <Icon name="arrow-drop-up" style={styles.upIcon} size={20} color={colors.white} />
+          </Pressable>
+        )}
+      </Animated.View>
     </>
   );
 }
@@ -70,7 +67,7 @@ const styles = StyleSheet.create({
   primaryButtonContainer: {
     flexDirection: 'row',
     position: 'absolute',
-    bottom: 0,
+    bottom: 12,
     right: 12,
     elevation: 4,
     borderRadius: 100,
@@ -85,7 +82,7 @@ const styles = StyleSheet.create({
   },
   expandedLabelsContainer: {
     position: 'absolute',
-    right: 88,
+    right: 80,
     bottom: 25,
     height: 75,
     justifyContent: 'space-between',
@@ -93,7 +90,7 @@ const styles = StyleSheet.create({
   },
   secondaryButtonContainer: {
     position: 'absolute',
-    right: 14,
+    right: 2,
     bottom: 4,
     backgroundColor: colors.red,
     width: 44,

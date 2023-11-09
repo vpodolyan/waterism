@@ -42,11 +42,11 @@ export function Fab({ onPrimaryButtonClick, onSencodaryButtonClick }: Props) {
         </View>
       )}
 
-      <Pressable onPress={handleSecondaryPress}>
-        <Animated.View style={[styles.secondaryButtonContainer, secondaryButtonAnimatedStyle]}>
+      <Animated.View style={[styles.secondaryButtonContainer, secondaryButtonAnimatedStyle]}>
+        <Pressable onPress={handleSecondaryPress}>
           <Icon name="refresh" color={colors.white} size={20} />
-        </Animated.View>
-      </Pressable>
+        </Pressable>
+      </Animated.View>
 
       <Animated.View style={[styles.primaryButtonContainer, primaryButtonAnimatedStyle]}>
         <Pressable onPress={handlePrimaryPress}>
@@ -90,8 +90,8 @@ const styles = StyleSheet.create({
   },
   secondaryButtonContainer: {
     position: 'absolute',
-    right: 2,
-    bottom: 4,
+    right: 14,
+    bottom: 16,
     backgroundColor: colors.red,
     width: 44,
     height: 44,

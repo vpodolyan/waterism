@@ -4,6 +4,5 @@
   "semi": true,
   "singleQuote": true,
   "trailingComma": "none",
-  "endOfLine": "lf",
-  "bracketSpacing": true
+  "endOfLine": "lf"
 }
